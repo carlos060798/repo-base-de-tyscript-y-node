@@ -1,14 +1,37 @@
+'use client'
+ 
+import { useOptimistic } from 'react'
 import { Metadata } from "next";
+
 
 export const meta: Metadata = {
   title: "About Page",
   description: "About Page",
 };
 
+
+
+
+ 
+type Message = {
+  message: string
+}
+ 
+
 export default function About() {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (
+      (e.ctrlKey || e.metaKey) &&
+      (e.key === 'Enter' || e.key === 'NumpadEnter')
+    ) {
+      e.preventDefault()
+      e.currentTarget.form?.requestSubmit()
+    }
+  }
+ 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold text-center">About</h1>
-    </main>
-  );
+    <div>
+      <textarea name="entry" rows={20} required onKeyDown={handleKeyDown} />
+    </div>
+  )
 }
